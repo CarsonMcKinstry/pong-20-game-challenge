@@ -15,6 +15,8 @@ signal right_wall_hit
 
 var initial_position: Vector2i
 
+var playing: bool = false
+
 func _ready():
 	initial_position = position
 	assert(left_paddle)
@@ -29,22 +31,10 @@ func reset_position():
 
 func start(last_point: GameField.LastPoint):
 	match last_point:
-		GameField.LastPoint.Left:
-			velocity = Vector2(-500, 0)
 		GameField.LastPoint.Right:
+			velocity = Vector2(-500, 0)
+		GameField.LastPoint.Left:
 			velocity = Vector2(500, 0)
-
-func collide_left():
-	velocity = Vector2(SPEED, 0) + left_paddle.velocity
-
-func collide_right():
-	velocity = Vector2(-SPEED, 0) + right_paddle.velocity
-
-func collide_top():
-	velocity = Vector2(velocity.x, SPEED)
-
-func collide_bottom():
-	velocity = Vector2(velocity.x, -SPEED)
 
 func collide_left_wall():
 	left_wall_hit.emit()
@@ -53,22 +43,22 @@ func collide_right_wall():
 	right_wall_hit.emit()
 
 func _physics_process(delta):
-	
-	var collided = move_and_slide()
-	
-	if collided:
-		var collider = get_last_slide_collision().get_collider()
-		
-		match collider:
-			left_paddle:
-				collide_left()
-			right_paddle:
-				collide_right()
-			top_wall:
-				collide_top()
-			bottom_wall:
-				collide_bottom()
-			left_wall:
-				collide_right_wall()
-			right_wall:
-				collide_left_wall()
+	if playing:
+		var collision_info = move_and_collide(velocity * delta)
+
+		if collision_info:
+			var collider = collision_info.get_collider()
+			
+			match collider:
+				left_wall:
+					collide_left_wall()
+					return
+				right_wall:
+					collide_right_wall()
+					return
+				left_paddle, right_paddle:
+					var paddle_velocity = (collider as Paddle).velocity
+					if paddle_velocity.y != 0:
+						velocity.y = (collider as Paddle).velocity.y
+			velocity = velocity.bounce(collision_info.get_normal())
+					

@@ -5,6 +5,8 @@ extends CharacterBody2D
 
 var initial_position: Vector2i
 
+var playing: bool = false
+
 func _ready():
 	initial_position = position
 

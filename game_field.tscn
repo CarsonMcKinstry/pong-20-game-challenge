@@ -31,7 +31,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="VFlowContainer" type="VFlowContainer" parent="."]
+[node name="Divider" type="VFlowContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
@@ -43,67 +44,131 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/v_separation = 36
 
-[node name="ColorRect" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect2" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect2" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect3" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect3" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect4" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect4" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect5" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect5" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect6" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect6" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect7" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect7" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect8" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect8" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect9" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect9" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect10" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect10" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect11" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect11" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect12" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect12" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect13" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect13" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="ColorRect14" type="ColorRect" parent="VFlowContainer"]
+[node name="ColorRect14" type="ColorRect" parent="Divider"]
 custom_minimum_size = Vector2(16, 36)
 layout_mode = 2
 
-[node name="GameField" type="Node2D" parent="." node_paths=PackedStringArray("ball", "left_paddle", "right_paddle")]
+[node name="StartLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -33.5
+offset_right = 258.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "press space to start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CountDownLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -33.5
+offset_right = 20.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 128
+text = "3"
+
+[node name="ScoreBoard" type="HFlowContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 236.0
+grow_horizontal = 2
+
+[node name="LeftScore" type="Label" parent="ScoreBoard"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 128
+text = "0"
+horizontal_alignment = 1
+
+[node name="RightScore" type="Label" parent="ScoreBoard"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 128
+text = "0"
+horizontal_alignment = 1
+
+[node name="GameField" type="Node2D" parent="." node_paths=PackedStringArray("ball", "left_paddle", "right_paddle", "timer", "divider", "start_label", "countdown_label", "left_score_label", "right_score_label")]
 script = ExtResource("1_41fvt")
 ball = NodePath("Ball")
 left_paddle = NodePath("PaddleLeft")
 right_paddle = NodePath("PaddleRight")
+timer = NodePath("Timer")
+divider = NodePath("../Divider")
+start_label = NodePath("../StartLabel")
+countdown_label = NodePath("../CountDownLabel")
+left_score_label = NodePath("../ScoreBoard/LeftScore")
+right_score_label = NodePath("../ScoreBoard/RightScore")
+
+[node name="Timer" type="Timer" parent="GameField"]
 
 [node name="TopWall" type="StaticBody2D" parent="GameField"]
 position = Vector2(0, -20)
@@ -166,5 +231,6 @@ right_wall = NodePath("../RightWall")
 top_wall = NodePath("../TopWall")
 bottom_wall = NodePath("../BottomWall")
 
+[connection signal="timeout" from="GameField/Timer" to="GameField" method="_on_timer_timeout"]
 [connection signal="left_wall_hit" from="GameField/Ball" to="GameField" method="_on_ball_left_wall_hit"]
 [connection signal="right_wall_hit" from="GameField/Ball" to="GameField" method="_on_ball_right_wall_hit"]
