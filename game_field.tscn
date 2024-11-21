@@ -1,0 +1,170 @@
+[gd_scene load_steps=8 format=3 uid="uid://b22wmiee4xswa"]
+
+[ext_resource type="PackedScene" uid="uid://c4perwcnn7dhc" path="res://paddle.tscn" id="1_6t5kh"]
+[ext_resource type="Script" path="res://game_field.gd" id="1_41fvt"]
+[ext_resource type="Script" path="res://player_paddle_controller.gd" id="2_emaxd"]
+[ext_resource type="PackedScene" uid="uid://b0koe277kpx5q" path="res://ball.tscn" id="3_eor6n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hknit"]
+size = Vector2(1728, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5nqc5"]
+size = Vector2(96, 972)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwxk4"]
+size = Vector2(96, 972)
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VFlowContainer" type="VFlowContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/v_separation = 36
+
+[node name="ColorRect" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect2" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect3" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect4" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect5" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect6" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect7" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect8" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect9" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect10" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect11" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect12" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect13" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="ColorRect14" type="ColorRect" parent="VFlowContainer"]
+custom_minimum_size = Vector2(16, 36)
+layout_mode = 2
+
+[node name="GameField" type="Node2D" parent="." node_paths=PackedStringArray("ball", "left_paddle", "right_paddle")]
+script = ExtResource("1_41fvt")
+ball = NodePath("Ball")
+left_paddle = NodePath("PaddleLeft")
+right_paddle = NodePath("PaddleRight")
+
+[node name="TopWall" type="StaticBody2D" parent="GameField"]
+position = Vector2(0, -20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameField/TopWall"]
+position = Vector2(864, 10)
+shape = SubResource("RectangleShape2D_hknit")
+
+[node name="BottomWall" type="StaticBody2D" parent="GameField"]
+position = Vector2(0, 972)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameField/BottomWall"]
+position = Vector2(864, 10)
+shape = SubResource("RectangleShape2D_hknit")
+metadata/_edit_lock_ = true
+
+[node name="LeftWall" type="StaticBody2D" parent="GameField"]
+position = Vector2(0, -1)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameField/LeftWall"]
+position = Vector2(48, 487)
+shape = SubResource("RectangleShape2D_5nqc5")
+
+[node name="RightWall" type="StaticBody2D" parent="GameField"]
+position = Vector2(1617, 0)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameField/RightWall"]
+position = Vector2(63, 486)
+shape = SubResource("RectangleShape2D_iwxk4")
+metadata/_edit_lock_ = true
+
+[node name="PlayerPaddleControllerLeft" type="Node" parent="GameField" node_paths=PackedStringArray("body")]
+script = ExtResource("2_emaxd")
+UP_ACTION = "player_up"
+DOWN_ACTION = "player_down"
+body = NodePath("../PaddleLeft")
+
+[node name="PlayerPaddleControllerRight" type="Node" parent="GameField" node_paths=PackedStringArray("body")]
+script = ExtResource("2_emaxd")
+UP_ACTION = "opponent_up"
+DOWN_ACTION = "opponent_down"
+body = NodePath("../PaddleRight")
+
+[node name="PaddleLeft" parent="GameField" instance=ExtResource("1_6t5kh")]
+position = Vector2(96, 463)
+
+[node name="PaddleRight" parent="GameField" instance=ExtResource("1_6t5kh")]
+position = Vector2(1632, 463)
+
+[node name="Ball" parent="GameField" node_paths=PackedStringArray("left_paddle", "right_paddle", "left_wall", "right_wall", "top_wall", "bottom_wall") instance=ExtResource("3_eor6n")]
+position = Vector2(864, 463)
+collision_layer = 3
+collision_mask = 3
+left_paddle = NodePath("../PaddleLeft")
+right_paddle = NodePath("../PaddleRight")
+left_wall = NodePath("../LeftWall")
+right_wall = NodePath("../RightWall")
+top_wall = NodePath("../TopWall")
+bottom_wall = NodePath("../BottomWall")
+
+[connection signal="left_wall_hit" from="GameField/Ball" to="GameField" method="_on_ball_left_wall_hit"]
+[connection signal="right_wall_hit" from="GameField/Ball" to="GameField" method="_on_ball_right_wall_hit"]
