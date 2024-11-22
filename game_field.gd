@@ -189,9 +189,9 @@ func _check_win_condition():
 func _get_winner_text():
 	match _last_point:
 		LastPoint.LEFT:
-			return "Left"
+			return "Player 1"
 		LastPoint.RIGHT:
-			return "Right"
+			return "Player 2"
 
 func _reset_ball():
 	ball.reset_position()
