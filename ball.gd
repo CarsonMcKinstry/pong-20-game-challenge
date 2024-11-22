@@ -1,7 +1,7 @@
 class_name Ball
 extends CharacterBody2D
 
-@export var SPEED: int = 500
+@export var speed: int = 500
 @export var left_paddle: Paddle
 @export var right_paddle: Paddle
 
@@ -13,29 +13,29 @@ extends CharacterBody2D
 signal left_wall_hit
 signal right_wall_hit
 
-var initial_position: Vector2i
+enum BallState {
+	MOVING,
+	STATIONARY
+}
 
-var playing: bool = false
+var _initial_position: Vector2i
+var _current_state: BallState = BallState.STATIONARY
 
 func _ready():
-	print(SPEED)
-	initial_position = position
-	assert(left_paddle)
-	assert(right_paddle)
-	assert(left_wall)
-	assert(right_wall)
-	assert(top_wall)
-	assert(bottom_wall)
+	_validate_dependencies()
+	_initial_position = position
+	
 
 func reset_position():
-	position = initial_position
+	position = _initial_position
 
 func start(last_point: GameField.LastPoint):
 	match last_point:
 		GameField.LastPoint.RIGHT:
-			velocity = Vector2(-500, 0)
+			velocity = Vector2(-speed, 0)
 		GameField.LastPoint.LEFT:
-			velocity = Vector2(500, 0)
+			velocity = Vector2(speed, 0)
+	_current_state = BallState.MOVING
 
 func collide_left_wall():
 	left_wall_hit.emit()
@@ -44,7 +44,7 @@ func collide_right_wall():
 	right_wall_hit.emit()
 
 func _physics_process(delta):
-	if playing:
+	if _current_state == BallState.MOVING:
 		var collision_info = move_and_collide(velocity * delta)
 
 		if collision_info:
@@ -62,3 +62,14 @@ func _physics_process(delta):
 					if paddle_velocity.y != 0:
 						velocity.y = (collider as Paddle).velocity.y
 			velocity = velocity.bounce(collision_info.get_normal())
+
+func stop():
+	_current_state = BallState.STATIONARY
+
+func _validate_dependencies():
+	assert(left_paddle)
+	assert(right_paddle)
+	assert(left_wall)
+	assert(right_wall)
+	assert(top_wall)
+	assert(bottom_wall)

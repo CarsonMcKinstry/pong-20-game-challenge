@@ -162,14 +162,12 @@ func _handle_countdown():
 	_countdown = INITIAL_COUNTDOWN
 	_reset_ball()
 	timer.start()
-	ball.playing = false
-	left_paddle.playing = true
-	right_paddle.playing = true
+	left_paddle.start()
+	right_paddle.start()
 
 func _handle_playing():
 	_show_gameplay_screen()
 	timer.stop()
-	ball.playing = true
 	ball.start(_last_point)
 
 func _handle_game_over():
@@ -177,9 +175,8 @@ func _handle_game_over():
 	_reset_paddles()
 	_show_gameover_screen()
 	timer.stop()
-	ball.playing = false
-	left_paddle.playing = false
-	right_paddle.playing = false
+	left_paddle.stop()
+	right_paddle.stop()
 
 # ========= Utils =========
 
@@ -198,6 +195,7 @@ func _get_winner_text():
 
 func _reset_ball():
 	ball.reset_position()
+	ball.stop()
 
 func _reset_paddles():
 	left_paddle.reset_position()

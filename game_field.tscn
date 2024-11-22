@@ -245,6 +245,7 @@ visible = false
 position = Vector2(864, 463)
 collision_layer = 3
 collision_mask = 3
+speed = 750
 left_paddle = NodePath("../PaddleLeft")
 right_paddle = NodePath("../PaddleRight")
 left_wall = NodePath("../LeftWall")
