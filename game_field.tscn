@@ -118,6 +118,25 @@ text = "press space to start"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="WinLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -152.5
+offset_right = 258.0
+offset_bottom = -85.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "{} Wins!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CountDownLabel" type="Label" parent="."]
 visible = false
 layout_mode = 1
@@ -156,17 +175,18 @@ theme_override_font_sizes/font_size = 128
 text = "0"
 horizontal_alignment = 1
 
-[node name="GameField" type="Node2D" parent="." node_paths=PackedStringArray("ball", "left_paddle", "right_paddle", "timer", "divider", "start_label", "countdown_label", "left_score_label", "right_score_label")]
+[node name="GameField" type="Node2D" parent="." node_paths=PackedStringArray("ball", "left_paddle", "right_paddle", "divider", "start_label", "win_label", "countdown_label", "left_score_label", "right_score_label", "timer")]
 script = ExtResource("1_41fvt")
 ball = NodePath("Ball")
 left_paddle = NodePath("PaddleLeft")
 right_paddle = NodePath("PaddleRight")
-timer = NodePath("Timer")
 divider = NodePath("../Divider")
 start_label = NodePath("../StartLabel")
+win_label = NodePath("../WinLabel")
 countdown_label = NodePath("../CountDownLabel")
 left_score_label = NodePath("../ScoreBoard/LeftScore")
 right_score_label = NodePath("../ScoreBoard/RightScore")
+timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="GameField"]
 
@@ -221,6 +241,7 @@ position = Vector2(96, 463)
 position = Vector2(1632, 463)
 
 [node name="Ball" parent="GameField" node_paths=PackedStringArray("left_paddle", "right_paddle", "left_wall", "right_wall", "top_wall", "bottom_wall") instance=ExtResource("3_eor6n")]
+visible = false
 position = Vector2(864, 463)
 collision_layer = 3
 collision_mask = 3

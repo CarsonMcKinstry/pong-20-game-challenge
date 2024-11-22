@@ -18,6 +18,7 @@ var initial_position: Vector2i
 var playing: bool = false
 
 func _ready():
+	print(SPEED)
 	initial_position = position
 	assert(left_paddle)
 	assert(right_paddle)
@@ -31,9 +32,9 @@ func reset_position():
 
 func start(last_point: GameField.LastPoint):
 	match last_point:
-		GameField.LastPoint.Right:
+		GameField.LastPoint.RIGHT:
 			velocity = Vector2(-500, 0)
-		GameField.LastPoint.Left:
+		GameField.LastPoint.LEFT:
 			velocity = Vector2(500, 0)
 
 func collide_left_wall():
@@ -61,4 +62,3 @@ func _physics_process(delta):
 					if paddle_velocity.y != 0:
 						velocity.y = (collider as Paddle).velocity.y
 			velocity = velocity.bounce(collision_info.get_normal())
-					

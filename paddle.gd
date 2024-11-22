@@ -10,8 +10,9 @@ var playing: bool = false
 func _ready():
 	initial_position = position
 
-func _physics_process(delta):
-	move_and_slide()
+func _physics_process(_delta):
+	if playing:
+		move_and_slide()
 
 func reset_position():
 	position = initial_position
